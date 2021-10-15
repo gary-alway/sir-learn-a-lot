@@ -3,12 +3,13 @@ import express from 'express'
 import { graphqlHTTP } from 'express-graphql'
 import { buildSchema } from 'type-graphql'
 import { StudentResolver } from './domain/studentResolver'
+import { TrackResolver } from './domain/trackResolver'
 
 async function start() {
   const app = express()
 
   const schema = await buildSchema({
-    resolvers: [StudentResolver],
+    resolvers: [StudentResolver, TrackResolver],
     emitSchemaFile: true
   })
 
