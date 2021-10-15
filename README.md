@@ -5,6 +5,7 @@
 - readme with diagrams
 - use terraform
 - convert to lambda
+- user preferences from learn-hub
 
 ## AWS local
 

@@ -1,4 +1,5 @@
 import { DocumentClient } from 'aws-sdk/clients/dynamodb'
+import { courseRepositoryFactory } from './domain/courseRepository'
 import { studentRepositoryFactory } from './domain/studentRepository'
 import { trackRepositoryFactory } from './domain/trackRepository'
 import { createDynamoClient } from './dynamoClient'
@@ -15,3 +16,4 @@ export const dynamoClient = createDynamoClient(new DocumentClient(AWS_CONFIG))
 
 export const studentRepository = studentRepositoryFactory(dynamoClient)
 export const trackRepository = trackRepositoryFactory(dynamoClient)
+export const courseRepository = courseRepositoryFactory(dynamoClient)

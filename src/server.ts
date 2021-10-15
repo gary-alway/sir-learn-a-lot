@@ -4,12 +4,13 @@ import { graphqlHTTP } from 'express-graphql'
 import { buildSchema } from 'type-graphql'
 import { StudentResolver } from './domain/studentResolver'
 import { TrackResolver } from './domain/trackResolver'
+import { CourseResolver } from './domain/courseResolver'
 
 async function start() {
   const app = express()
 
   const schema = await buildSchema({
-    resolvers: [StudentResolver, TrackResolver],
+    resolvers: [StudentResolver, TrackResolver, CourseResolver],
     emitSchemaFile: true
   })
 
