@@ -24,9 +24,11 @@
     "moduleResolution": "node",
     "esModuleInterop": true,
     "preserveConstEnums": true,
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true
   },
-  "include": ["./src/**/*.ts", "./test/**/*.ts", "globals.d.ts"],
+  "include": ["./src/**/*.ts", "./test/**/*.ts"],
   "awesomeTypescriptLoaderOptions": {
     "useCache": true
   }

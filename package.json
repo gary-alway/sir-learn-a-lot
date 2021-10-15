@@ -5,6 +5,8 @@
   "author": "Gary Alway",
   "license": "MIT",
   "scripts": {
+    "local:up": "make -C ./infra up",
+    "local:down": "make -C ./infra down",
     "start": "NODE_ENV=prod node dist/src/server.js",
     "dev": "WATCH_MODE=true NODE_ENV=dev nodemon --exec 'ts-node --files --project tsconfig.json' src/server.ts",
     "lint": "yarn eslint . --ext .js,.jsx,.ts,.tsx",
@@ -14,15 +16,26 @@
     "format": "prettier --write '{src,test}/**/*.{js,ts,json,md}'"
   },
   "dependencies": {
+    "aws-sdk": "^2.1008.0",
+    "class-validator": "^0.13.1",
     "express": "^4.17.1",
     "express-graphql": "^0.12.0",
-    "graphql": "^15.6.1"
+    "graphql": "^15.6.1",
+    "ramda": "^0.27.1",
+    "reflect-metadata": "^0.1.13",
+    "type-graphql": "^1.1.1",
+    "uuid": "^8.3.2"
   },
   "devDependencies": {
     "@types/express": "^4.17.13",
     "@types/express-graphql": "^0.9.0",
     "@types/graphql": "^14.5.0",
     "@types/node": "^16.11.0",
+    "@types/ramda": "^0.27.45",
+    "@types/uuid": "^8.3.1",
+    "@typescript-eslint/eslint-plugin": "^5.0.0",
+    "@typescript-eslint/parser": "^5.0.0",
+    "eslint": "^8.0.1",
     "nodemon": "^2.0.13",
     "prettier": "^2.4.1",
     "ts-node": "^10.3.0",

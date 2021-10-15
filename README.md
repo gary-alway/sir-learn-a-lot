@@ -1,37 +1,26 @@
-# sir learn a lot
+# Sir learn a lot
 
-todo
+## todo
 
+- use terraform
+- convert to lambda
+
+## AWS local
 
 ```
-mutation addANewBook {
-  addBook(title:"my new book", authorId:1) {
-    title
-    id
-    authorId
-  }
-}
+awslocal dynamodb scan --table-name sir-learn-a-lot
+```
 
-query demo {
-  book(id: 1) {
-    title
-  }
-  author(id: 1) {
-    name
-  }
-  books {
+## GraphQL
+
+[Local GraphiQL](http://localhost:3000/graphql)
+
+```
+mutation {
+  addStudent(StudentInput: {firstname: "Gary", lastname:"Alway"}) {
     id
-    title
-    author {
-      name
-    }
-  }
-  authors {
-    id
-    name
-    books {
-      title
-    }
+    firstname
+    lastname
   }
 }
 ```
