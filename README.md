@@ -6,6 +6,9 @@
 - use terraform
 - convert to lambda
 - user preferences from learn-hub
+- get student by email, sparse index on email ?
+- track name must be unique
+- track and course name must be unique ?
 
 ## AWS local
 
@@ -20,23 +23,44 @@ awslocal dynamodb scan --table-name sir-learn-a-lot
 Sample mutation
 
 ```
-mutation {
-  addStudent(StudentInput: {firstname: "Gary", lastname:"Alway"}) {
+mutation addTrack {
+  addTrack(TrackInput: { name:"track 1"}) {
     id
-    firstname
-    lastname
+    name
   }
 }
-```
 
-Sample query
-
-```
-query {
-  getStudent(id: "fde608b0-afd7-4399-bf7d-c2295f6a89ff") {
+mutation addCourse {
+  addCourse(CourseInput:{
+    name: "course 2",
+    trackId:"d7c843e0-8559-4390-bc93-f27b3f981e4a"
+  }) {
     id
-    firstname
-    lastname
+    name
+    trackId
+  }
+}
+
+query getTrack {
+  getTrack(id:"d7c843e0-8559-4390-bc93-f27b3f981e4a") {
+    id
+    name
+    courses {
+      id
+      name
+      trackId
+    }
+  }
+}
+
+query getCourse {
+  getCourse(id:"5eeeed69-1787-44fb-b9ef-0318512568d8") {
+    id
+    name
+    track {
+      id
+      name
+    }
   }
 }
 ```

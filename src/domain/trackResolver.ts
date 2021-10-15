@@ -1,5 +1,12 @@
-import { Arg, Mutation, Query, Resolver } from 'type-graphql'
-import { trackRepository } from '../constants'
+import {
+  Arg,
+  FieldResolver,
+  Mutation,
+  Query,
+  Resolver,
+  Root
+} from 'type-graphql'
+import { courseRepository, trackRepository } from '../constants'
 import { Track, TrackInput } from './track'
 
 @Resolver(Track)
@@ -12,5 +19,10 @@ export class TrackResolver {
   @Mutation(() => Track)
   async addTrack(@Arg('TrackInput') { name }: TrackInput): Promise<Track> {
     return trackRepository.saveTrack({ name })
+  }
+
+  @FieldResolver()
+  courses(@Root() track: Track) {
+    return courseRepository.getCoursesByTrackId(track.id)
   }
 }
