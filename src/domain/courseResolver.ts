@@ -6,7 +6,11 @@ import {
   Resolver,
   Root
 } from 'type-graphql'
-import { courseRepository, trackRepository } from '../constants'
+import {
+  courseRepository,
+  enrollmentRepository,
+  trackRepository
+} from '../constants'
 import { Course, CourseInput } from './course'
 
 @Resolver(Course)
@@ -26,5 +30,10 @@ export class CourseResolver {
   @FieldResolver()
   track(@Root() course: Course) {
     return trackRepository.getTrackById(course.trackId)
+  }
+
+  @FieldResolver()
+  enrollments(@Root() course: Course) {
+    return enrollmentRepository.getEnrollmentsByCourseId(course.id)
   }
 }

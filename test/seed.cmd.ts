@@ -1,6 +1,8 @@
 import { datatype, internet, lorem, name } from 'faker'
+import { unnest } from 'ramda'
 import {
   courseRepository,
+  enrollmentRepository,
   studentRepository,
   trackRepository
 } from '../src/constants'
@@ -31,9 +33,22 @@ const seedDb = async () => {
     )
   )
 
-  // todo: enrollments
+  const _courses = unnest(courses)
+  const halfOfCourses = _courses.length / 2
 
-  console.log(courses, students)
+  const firstFiveStudents = students.slice(0, 5)
+  const firstHalfOfCourses = _courses.slice(0, halfOfCourses)
+
+  await Promise.all(
+    firstFiveStudents.map(async ({ id: studentId }) => {
+      return Promise.all(
+        firstHalfOfCourses.map(
+          async ({ id: courseId }) =>
+            await enrollmentRepository.saveEnrollment({ studentId, courseId })
+        )
+      )
+    })
+  )
 }
 
 seedDb()

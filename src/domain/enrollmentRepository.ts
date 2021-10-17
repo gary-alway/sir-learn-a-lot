@@ -15,7 +15,7 @@ const entityType = 'Enrollment'
 const dynamoRecordToRecord = (record: any): Enrollment => {
   const { pk, sk, ...data } = record
 
-  return omit(['entityType'], {
+  return omit(['gsi1_pk', 'gsi1_sk', 'entityType'], {
     ...data,
     id: removePrefix(pk, ENROLLMENT_PREFIX),
     courseId: removePrefix(sk, COURSE_PREFIX)
@@ -48,6 +48,28 @@ export const enrollmentRepositoryFactory = (client: DynamoClient) => {
         return record ? dynamoRecordToRecord(record) : undefined
       })
 
+  const getEnrollmentsByCourseId = async (
+    courseId: string
+  ): Promise<Enrollment[]> =>
+    client
+      .query({
+        TableName: DDB_TABLE,
+        IndexName: 'gsi1',
+        KeyConditionExpression:
+          '#gsi1_pk = :gsi1_pk and begins_with (#gsi1_sk, :gsi1_sk)',
+        ExpressionAttributeNames: {
+          '#gsi1_pk': 'gsi1_pk',
+          '#gsi1_sk': 'gsi1_sk'
+        },
+        ExpressionAttributeValues: {
+          ':gsi1_pk': addPrefix(courseId, COURSE_PREFIX),
+          ':gsi1_sk': ENROLLMENT_PREFIX
+        }
+      } as QueryInput)
+      .then(res =>
+        pathOr<Enrollment[]>([], ['Items'], res).map(dynamoRecordToRecord)
+      )
+
   const saveEnrollment = async (
     { courseId, studentId }: EnrollmentInput,
     id?: string
@@ -60,6 +82,8 @@ export const enrollmentRepositoryFactory = (client: DynamoClient) => {
     const record = {
       pk: addPrefix(_id, ENROLLMENT_PREFIX),
       sk: addPrefix(_courseId, COURSE_PREFIX),
+      gsi1_pk: addPrefix(_courseId, COURSE_PREFIX),
+      gsi1_sk: addPrefix(_id, ENROLLMENT_PREFIX),
       studentId: _studentId,
       date,
       entityType
@@ -79,6 +103,7 @@ export const enrollmentRepositoryFactory = (client: DynamoClient) => {
 
   return {
     getEnrollmentById,
+    getEnrollmentsByCourseId,
     saveEnrollment
   }
 }
