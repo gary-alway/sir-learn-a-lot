@@ -1,66 +1,75 @@
 # Sir learn a lot
 
-## todo
+GraphQl API and single table DynamoDb data store for an online learning platform.
 
-- readme with diagrams
-- use terraform
-- convert to lambda
-- user preferences from learn-hub
-- get student by email, sparse index on email ?
-- track name must be unique
-- track and course name must be unique ?
+<p float="left">
+  <img src="/design/DynamoDB.png" width="100" />
+  <img src="./design/GraphQl.png" width="100" /> 
+</p>
 
-## AWS local
+- [Requirements](#requirements)
+- [Environment setup](#environment-setup)
+- [Local development](#local-development)
+- [AWS commands](#aws-commands)
+- [Table design](#table-design)
+  - [ERD](#erd)
+  - [Access patterns](#access-patterns)
+  - [Key prefixes](#key-prefixes)
 
+## Requirements
+
+- [docker](https://www.docker.com/)
+- [localstack](https://localstack.cloud/)
+- [awslocal](https://github.com/localstack/awscli-local)
+
+## Environment setup
+
+```bash
+yarn local:up
+
+# tear down localstack docker container
+yarn local:down
 ```
+
+truncate the dynamo table
+
+```bash
+yarn purge
+```
+
+## Local development
+
+```bash
+yarn dev
+```
+
+[GraphiQl running on localhost port 3000](http://localhost:3000/graphql)
+
+## AWS commands
+
+```bash
 awslocal dynamodb scan --table-name sir-learn-a-lot
+awslocal dynamodb scan --table-name sir-learn-a-lot --index-name gsi1
+awslocal dynamodb scan --table-name sir-learn-a-lot --index-name gsi2
 ```
 
-## GraphQL
+## Table design
 
-[Local GraphiQL](http://localhost:3000/graphql)
+### ERD
 
-Sample mutation
+![erd](./design/erd.svg)
 
-```
-mutation addTrack {
-  addTrack(TrackInput: { name:"track 1"}) {
-    id
-    name
-  }
-}
+### Access patterns
 
-mutation addCourse {
-  addCourse(CourseInput:{
-    name: "course 2",
-    trackId:"d7c843e0-8559-4390-bc93-f27b3f981e4a"
-  }) {
-    id
-    name
-    trackId
-  }
-}
+- get course by id
+- get course by track id (gsi1)
+- get enrollment by id
+- get student by id
+- get track by id
 
-query getTrack {
-  getTrack(id:"d7c843e0-8559-4390-bc93-f27b3f981e4a") {
-    id
-    name
-    courses {
-      id
-      name
-      trackId
-    }
-  }
-}
+### Key prefixes
 
-query getCourse {
-  getCourse(id:"5eeeed69-1787-44fb-b9ef-0318512568d8") {
-    id
-    name
-    track {
-      id
-      name
-    }
-  }
-}
-```
+- `c#` = course
+- `s#` = student
+- `t#` = track
+- `e#` = enrollment
