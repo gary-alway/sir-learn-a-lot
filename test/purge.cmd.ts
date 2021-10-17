@@ -1,9 +1,6 @@
 import { DDB_TABLE, dynamoClient } from '../src/constants'
 
-export const purgeAll = async () =>
-  Promise.all([dynamoClient.truncateTable(DDB_TABLE, 'pk', 'sk')])
-
-purgeAll()
+Promise.all([dynamoClient.truncateTable(DDB_TABLE, 'pk', 'sk')])
   .then(() => process.exit(0))
   .catch(err => {
     console.log(err)

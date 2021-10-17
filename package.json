@@ -14,7 +14,8 @@
     "test": "jest --maxWorkers=4 src",
     "test:acceptance": "jest --runInBand ./test/acceptance",
     "format": "prettier --write '{src,test}/**/*.{js,ts,json,md}'",
-    "purge": "ts-node --files --project tsconfig.json test/purge.cmd"
+    "purge": "ts-node --files --project tsconfig.json test/purge.cmd",
+    "seed": "ts-node --files --project tsconfig.json test/seed.cmd"
   },
   "dependencies": {
     "aws-sdk": "^2.1008.0",

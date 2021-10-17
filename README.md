@@ -37,6 +37,12 @@ truncate the dynamo table
 yarn purge
 ```
 
+seed the database with random data
+
+```bash
+yarn seed
+```
+
 ## Local development
 
 ```bash
