@@ -3,8 +3,8 @@
 GraphQl API and single table DynamoDb data store for an online learning platform.
 
 <p float="left">
-  <img src="/design/DynamoDB.png" width="100" />
   <img src="./design/GraphQl.png" width="100" /> 
+  <img src="/design/DynamoDB.png" width="100" />
 </p>
 
 - [Requirements](#requirements)

@@ -1,17 +1,18 @@
-import { omit } from 'ramda'
+import { omit, pathOr } from 'ramda'
 import { DynamoClient } from '../dynamoClient'
 import { DDB_TABLE } from '../constants'
 import { v4 as uuidv4 } from 'uuid'
 import { addPrefix, removePrefix } from '../utils'
 import { Track, TrackInput } from './track'
 import { DynamoDB } from 'aws-sdk'
+import { QueryInput } from 'aws-sdk/clients/dynamodb'
 
 export const TRACK_PREFIX = 't#'
 const entityType = 'track'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const dynamoRecordToRecord = (record: any): Track => {
-  const { pk, ...data } = record
+  const { pk, gsi1_pk, gsi1_sk, ...data } = record
 
   return omit(['sk', 'entityType'], {
     ...data,
@@ -31,6 +32,23 @@ export const trackRepositoryFactory = (client: DynamoClient) => {
       })
       .then(({ Item }) => (Item ? dynamoRecordToRecord(Item) : undefined))
 
+  const getTracks = async (): Promise<Track[]> =>
+    client
+      .query({
+        TableName: DDB_TABLE,
+        IndexName: 'gsi1',
+        KeyConditionExpression: '#gsi1_pk = :gsi1_pk',
+        ExpressionAttributeNames: {
+          '#gsi1_pk': 'gsi1_pk'
+        },
+        ExpressionAttributeValues: {
+          ':gsi1_pk': entityType
+        }
+      } as QueryInput)
+      .then(res =>
+        pathOr<Track[]>([], ['Items'], res).map(dynamoRecordToRecord)
+      )
+
   const saveTrack = async (
     { name }: TrackInput,
     id?: string
@@ -40,6 +58,8 @@ export const trackRepositoryFactory = (client: DynamoClient) => {
     const record = {
       pk: addPrefix(_id, TRACK_PREFIX),
       sk: addPrefix(_id, TRACK_PREFIX),
+      gsi1_pk: entityType, // enable getting all tracks
+      gsi1_sk: _id,
       name,
       entityType
     }
@@ -55,6 +75,7 @@ export const trackRepositoryFactory = (client: DynamoClient) => {
 
   return {
     getTrackById,
+    getTracks,
     saveTrack
   }
 }

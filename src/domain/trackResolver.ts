@@ -11,6 +11,11 @@ import { Track, TrackInput } from './track'
 
 @Resolver(Track)
 export class TrackResolver {
+  @Query(() => [Track], { nullable: true })
+  async getTracks(): Promise<Track[]> {
+    return trackRepository.getTracks()
+  }
+
   @Query(() => Track, { nullable: true })
   async getTrack(@Arg('id') id: string): Promise<Track | undefined> {
     return trackRepository.getTrackById(id)
