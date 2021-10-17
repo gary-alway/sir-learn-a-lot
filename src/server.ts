@@ -5,12 +5,18 @@ import { buildSchema } from 'type-graphql'
 import { StudentResolver } from './domain/studentResolver'
 import { TrackResolver } from './domain/trackResolver'
 import { CourseResolver } from './domain/courseResolver'
+import { EnrollmentResolver } from './domain/enrollmentResolver'
 
 async function start() {
   const app = express()
 
   const schema = await buildSchema({
-    resolvers: [StudentResolver, TrackResolver, CourseResolver],
+    resolvers: [
+      StudentResolver,
+      TrackResolver,
+      CourseResolver,
+      EnrollmentResolver
+    ],
     emitSchemaFile: true
   })
 
