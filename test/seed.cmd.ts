@@ -1,4 +1,4 @@
-import { datatype, lorem, name } from 'faker'
+import { datatype, internet, lorem, name } from 'faker'
 import {
   courseRepository,
   studentRepository,
@@ -24,8 +24,9 @@ const seedDb = async () => {
   const students = await Promise.all(
     [...Array(20)].map(() =>
       studentRepository.saveStudent({
-        firstname: name.firstName(),
-        lastname: name.lastName()
+        firstName: name.firstName(),
+        lastName: name.lastName(),
+        email: internet.email()
       })
     )
   )

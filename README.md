@@ -73,6 +73,7 @@ awslocal dynamodb scan --table-name sir-learn-a-lot --index-name gsi2
 - get course by track id (gsi1)
 - get enrollment by id
 - get student by id
+- get student by email
 
 ### Key prefixes
 

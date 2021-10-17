@@ -6,17 +6,23 @@ export class Student {
   id!: string
 
   @Field()
-  firstname!: string
+  firstName!: string
 
   @Field()
-  lastname!: string
+  lastName!: string
+
+  @Field()
+  email!: string
 }
 
 @InputType()
 export class StudentInput implements Partial<Student> {
   @Field()
-  firstname!: string
+  firstName!: string
 
   @Field()
-  lastname!: string
+  lastName!: string
+
+  @Field()
+  email!: string
 }

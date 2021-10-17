@@ -9,10 +9,21 @@ export class StudentResolver {
     return studentRepository.getStudentById(id)
   }
 
+  @Query(() => Student, { nullable: true })
+  async getStudentByEmail(
+    @Arg('email') email: string
+  ): Promise<Student | undefined> {
+    const result = await studentRepository.getStudentByEmail(email)
+    if (result.length > 1) {
+      console.warn('Duplicate registration detected for email: ', email)
+    }
+    return result.length > 0 ? result[0] : undefined
+  }
+
   @Mutation(() => Student)
   async addStudent(
-    @Arg('StudentInput') { firstname, lastname }: StudentInput
+    @Arg('StudentInput') { firstName, lastName, email }: StudentInput
   ): Promise<Student> {
-    return studentRepository.saveStudent({ firstname, lastname })
+    return studentRepository.saveStudent({ firstName, lastName, email })
   }
 }
