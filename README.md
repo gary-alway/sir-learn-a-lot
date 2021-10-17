@@ -67,11 +67,12 @@ awslocal dynamodb scan --table-name sir-learn-a-lot --index-name gsi2
 
 ### Access patterns
 
+- get all tracks
+- get track by id
 - get course by id
 - get course by track id (gsi1)
 - get enrollment by id
 - get student by id
-- get track by id
 
 ### Key prefixes
 
