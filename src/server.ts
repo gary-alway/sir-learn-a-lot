@@ -2,7 +2,7 @@ import 'reflect-metadata'
 import express from 'express'
 import { graphqlHTTP } from 'express-graphql'
 import { buildSchema } from 'type-graphql'
-import { StudentResolver } from './domain/studentResolver'
+import { PreferenceResolver, StudentResolver } from './domain/studentResolver'
 import { TrackResolver } from './domain/trackResolver'
 import { CourseResolver } from './domain/courseResolver'
 import { EnrollmentResolver } from './domain/enrollmentResolver'
@@ -15,7 +15,8 @@ async function start() {
       StudentResolver,
       TrackResolver,
       CourseResolver,
-      EnrollmentResolver
+      EnrollmentResolver,
+      PreferenceResolver
     ],
     emitSchemaFile: true
   })

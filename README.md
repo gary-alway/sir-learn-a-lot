@@ -51,6 +51,38 @@ yarn dev
 
 [GraphiQl running on localhost port 3000](http://localhost:3000/graphql)
 
+Explore the full database content:
+
+```
+query exploreDb {
+  getTracks {
+    id
+    name
+    courses {
+      id
+      name
+      enrollments {
+        id
+        student {
+          id
+          firstName
+          lastName
+          email
+          preferences {
+            track {
+              id
+              name
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+
+```
+
 ## AWS commands
 
 ```bash
@@ -75,6 +107,7 @@ awslocal dynamodb scan --table-name sir-learn-a-lot --index-name gsi2
 - get student by id
 - get student by email (gsi1)
 - get enrollments by course (gsi1)
+- get track preferences by student
 
 ### Key prefixes
 
@@ -82,3 +115,4 @@ awslocal dynamodb scan --table-name sir-learn-a-lot --index-name gsi2
 - `s#` = student
 - `t#` = track
 - `e#` = enrollment
+- `p#` = preference

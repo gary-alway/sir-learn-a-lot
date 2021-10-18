@@ -9,7 +9,7 @@ import { QueryInput } from 'aws-sdk/clients/dynamodb'
 import { STUDENT_PREFIX } from './studentRepository'
 
 export const ENROLLMENT_PREFIX = 'e#'
-const entityType = 'Enrollment'
+const entityType = 'enrollment'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const dynamoRecordToRecord = (record: any): Enrollment => {

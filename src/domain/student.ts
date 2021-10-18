@@ -1,4 +1,5 @@
 import { Field, InputType, ObjectType } from 'type-graphql'
+import { Preference } from './preference'
 
 @ObjectType()
 export class Student {
@@ -13,6 +14,9 @@ export class Student {
 
   @Field()
   email!: string
+
+  @Field(() => [Preference])
+  preferences: Preference[] | undefined
 }
 
 @InputType()

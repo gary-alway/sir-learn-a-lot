@@ -8,7 +8,7 @@ import { TRACK_PREFIX } from './trackRepository'
 import { QueryInput } from 'aws-sdk/clients/dynamodb'
 
 export const COURSE_PREFIX = 'c#'
-const entityType = 'Course'
+const entityType = 'course'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const dynamoRecordToRecord = (record: any): Course => {

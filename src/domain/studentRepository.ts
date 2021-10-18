@@ -80,7 +80,8 @@ export const studentRepositoryFactory = (client: DynamoClient) => {
       id: _id,
       firstName,
       lastName,
-      email: _email
+      email: _email,
+      preferences: undefined
     }
   }
 
