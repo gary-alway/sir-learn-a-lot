@@ -111,6 +111,8 @@ awslocal dynamodb scan --table-name sir-learn-a-lot --index-name gsi2
 
 ### Indexes
 
+Generated using [NoSQL Workbench](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/workbench.html)
+
 ![primary](./design/ddbPrimaryKey.png)
 
 ![GSI 1](./design/ddbGsi1.png)
