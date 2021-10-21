@@ -88,7 +88,8 @@ export const courseRepositoryFactory = (client: DynamoClient) => {
       trackId: _trackId,
       name,
       track: undefined,
-      enrollments: undefined
+      enrollments: undefined,
+      chapters: undefined
     }
   }
 

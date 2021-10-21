@@ -1,4 +1,5 @@
 import { Field, InputType, ObjectType } from 'type-graphql'
+import { Chapter } from './chapter'
 import { Enrollment } from './enrollment'
 import { Track } from './track'
 
@@ -18,6 +19,9 @@ export class Course {
 
   @Field(() => [Enrollment])
   enrollments: Enrollment[] | undefined
+
+  @Field(() => [Chapter])
+  chapters: Chapter[] | undefined
 }
 
 @InputType()

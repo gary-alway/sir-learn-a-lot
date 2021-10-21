@@ -7,6 +7,7 @@ import {
   Root
 } from 'type-graphql'
 import {
+  chapterRepository,
   courseRepository,
   enrollmentRepository,
   trackRepository
@@ -35,5 +36,10 @@ export class CourseResolver {
   @FieldResolver()
   enrollments(@Root() course: Course) {
     return enrollmentRepository.getEnrollmentsByCourseId(course.id)
+  }
+
+  @FieldResolver()
+  chapters(@Root() course: Course) {
+    return chapterRepository.getChaptersByCourseId(course.id)
   }
 }

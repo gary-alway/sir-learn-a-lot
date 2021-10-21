@@ -1,4 +1,5 @@
 import { DocumentClient } from 'aws-sdk/clients/dynamodb'
+import { chapterRepositoryFactory } from './domain/chapterRepository'
 import { courseRepositoryFactory } from './domain/courseRepository'
 import { enrollmentRepositoryFactory } from './domain/enrollmentRepository'
 import { preferenceRepositoryFactory } from './domain/preferenceRepository'
@@ -21,3 +22,4 @@ export const trackRepository = trackRepositoryFactory(dynamoClient)
 export const courseRepository = courseRepositoryFactory(dynamoClient)
 export const enrollmentRepository = enrollmentRepositoryFactory(dynamoClient)
 export const preferenceRepository = preferenceRepositoryFactory(dynamoClient)
+export const chapterRepository = chapterRepositoryFactory(dynamoClient)

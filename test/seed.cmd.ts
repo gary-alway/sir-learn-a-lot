@@ -1,6 +1,7 @@
 import { datatype, internet, lorem, name } from 'faker'
 import { unnest } from 'ramda'
 import {
+  chapterRepository,
   courseRepository,
   enrollmentRepository,
   studentRepository,
@@ -34,6 +35,21 @@ const seedDb = async () => {
   )
 
   const _courses = unnest(courses)
+
+  await Promise.all(
+    _courses.map(async ({ id: courseId }) => {
+      return Promise.all(
+        [...Array(datatype.number(10) + 1)].map(
+          async () =>
+            await chapterRepository.saveChapter({
+              courseId,
+              content: lorem.words(50)
+            })
+        )
+      )
+    })
+  )
+
   const halfOfCourses = _courses.length / 2
 
   const firstFiveStudents = students.slice(0, 5)
@@ -48,6 +64,20 @@ const seedDb = async () => {
         )
       )
     })
+  )
+
+  await enrollmentRepository.saveEnrollment({
+    studentId: students[students.length - 1].id,
+    courseId: _courses[_courses.length - 1].id
+  })
+  await enrollmentRepository.saveEnrollment({
+    studentId: students[students.length - 1].id,
+    courseId: _courses[_courses.length - 2].id
+  })
+
+  console.log(
+    'Student with 2 enrollments only',
+    students[students.length - 1].id
   )
 }
 

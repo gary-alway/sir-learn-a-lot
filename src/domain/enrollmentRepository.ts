@@ -17,8 +17,8 @@ const dynamoRecordToRecord = (record: any): Enrollment => {
 
   return omit(['gsi1_pk', 'gsi1_sk', 'gsi2_sk', 'entityType'], {
     ...data,
-    id: removePrefix(pk, ENROLLMENT_PREFIX),
-    courseId: removePrefix(sk, COURSE_PREFIX),
+    id: removePrefix(sk, ENROLLMENT_PREFIX),
+    courseId: removePrefix(pk, COURSE_PREFIX),
     studentId: removePrefix(gsi2_pk, STUDENT_PREFIX)
   }) as Enrollment
 }
@@ -30,14 +30,15 @@ export const enrollmentRepositoryFactory = (client: DynamoClient) => {
     client
       .query({
         TableName: DDB_TABLE,
-        KeyConditionExpression: '#pk = :pk and begins_with (#sk, :sk)',
+        KeyConditionExpression:
+          '#gsi1_pk = :gsi1_pk and begins_with (#gsi1_sk, :gsi1_sk)',
         ExpressionAttributeNames: {
-          '#pk': 'pk',
-          '#sk': 'sk'
+          '#gsi1_pk': 'gsi1_pk',
+          '#gsi1_sk': 'gsi1_sk'
         },
         ExpressionAttributeValues: {
-          ':pk': addPrefix(id, ENROLLMENT_PREFIX),
-          ':sk': COURSE_PREFIX
+          ':gsi1_pk': addPrefix(id, ENROLLMENT_PREFIX),
+          ':gsi1_sk': COURSE_PREFIX
         }
       } as QueryInput)
       .then(res => {
@@ -55,16 +56,14 @@ export const enrollmentRepositoryFactory = (client: DynamoClient) => {
     client
       .query({
         TableName: DDB_TABLE,
-        IndexName: 'gsi1',
-        KeyConditionExpression:
-          '#gsi1_pk = :gsi1_pk and begins_with (#gsi1_sk, :gsi1_sk)',
+        KeyConditionExpression: '#pk = :pk and begins_with (#sk, :sk)',
         ExpressionAttributeNames: {
-          '#gsi1_pk': 'gsi1_pk',
-          '#gsi1_sk': 'gsi1_sk'
+          '#pk': 'pk',
+          '#sk': 'sk'
         },
         ExpressionAttributeValues: {
-          ':gsi1_pk': addPrefix(courseId, COURSE_PREFIX),
-          ':gsi1_sk': ENROLLMENT_PREFIX
+          ':pk': addPrefix(courseId, COURSE_PREFIX),
+          ':sk': ENROLLMENT_PREFIX
         }
       } as QueryInput)
       .then(res =>
@@ -103,10 +102,10 @@ export const enrollmentRepositoryFactory = (client: DynamoClient) => {
     const date = new Date().toISOString()
 
     const record = {
-      pk: addPrefix(_id, ENROLLMENT_PREFIX),
-      sk: addPrefix(_courseId, COURSE_PREFIX),
-      gsi1_pk: addPrefix(_courseId, COURSE_PREFIX),
-      gsi1_sk: addPrefix(_id, ENROLLMENT_PREFIX),
+      pk: addPrefix(_courseId, COURSE_PREFIX),
+      sk: addPrefix(_id, ENROLLMENT_PREFIX),
+      gsi1_pk: addPrefix(_id, ENROLLMENT_PREFIX),
+      gsi1_sk: addPrefix(_courseId, COURSE_PREFIX),
       gsi2_pk: addPrefix(_studentId, STUDENT_PREFIX),
       gsi2_sk: addPrefix(_id, ENROLLMENT_PREFIX),
       date,

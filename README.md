@@ -61,6 +61,10 @@ query exploreDb {
     courses {
       id
       name
+      chapters {
+        id
+        content
+      }
       enrollments {
         id
         student {
@@ -101,11 +105,14 @@ awslocal dynamodb scan --table-name sir-learn-a-lot --index-name gsi2
 - get track by id
 - get course by id
 - get course by track id (gsi1)
-- get enrollment by id
+- get enrollment by id (gsi1)
+- get enrollments by course
+- get enrollments by student (gsi2)
 - get student by id
 - get student by email (gsi1)
-- get enrollments by course (gsi1)
 - get track preferences by student
+- get chapters by id (gsi1)
+- get chapters by course
 
 ### Key prefixes
 
@@ -114,3 +121,4 @@ awslocal dynamodb scan --table-name sir-learn-a-lot --index-name gsi2
 - `t#` = track
 - `e#` = enrollment
 - `p#` = preference
+- `h#` = chapter
