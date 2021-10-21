@@ -81,7 +81,8 @@ export const studentRepositoryFactory = (client: DynamoClient) => {
       firstName,
       lastName,
       email: _email,
-      preferences: undefined
+      preferences: undefined,
+      enrollments: undefined
     }
   }
 

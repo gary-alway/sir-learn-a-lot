@@ -13,12 +13,13 @@ const entityType = 'enrollment'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const dynamoRecordToRecord = (record: any): Enrollment => {
-  const { pk, sk, ...data } = record
+  const { pk, sk, gsi2_pk, ...data } = record
 
-  return omit(['gsi1_pk', 'gsi1_sk', 'entityType'], {
+  return omit(['gsi1_pk', 'gsi1_sk', 'gsi2_sk', 'entityType'], {
     ...data,
     id: removePrefix(pk, ENROLLMENT_PREFIX),
-    courseId: removePrefix(sk, COURSE_PREFIX)
+    courseId: removePrefix(sk, COURSE_PREFIX),
+    studentId: removePrefix(gsi2_pk, STUDENT_PREFIX)
   }) as Enrollment
 }
 
@@ -70,6 +71,28 @@ export const enrollmentRepositoryFactory = (client: DynamoClient) => {
         pathOr<Enrollment[]>([], ['Items'], res).map(dynamoRecordToRecord)
       )
 
+  const getEnrollmentsByStudentId = async (
+    courseId: string
+  ): Promise<Enrollment[]> =>
+    client
+      .query({
+        TableName: DDB_TABLE,
+        IndexName: 'gsi2',
+        KeyConditionExpression:
+          '#gsi2_pk = :gsi2_pk and begins_with (#gsi2_sk, :gsi2_sk)',
+        ExpressionAttributeNames: {
+          '#gsi2_pk': 'gsi2_pk',
+          '#gsi2_sk': 'gsi2_sk'
+        },
+        ExpressionAttributeValues: {
+          ':gsi2_pk': addPrefix(courseId, STUDENT_PREFIX),
+          ':gsi2_sk': ENROLLMENT_PREFIX
+        }
+      } as QueryInput)
+      .then(res =>
+        pathOr<Enrollment[]>([], ['Items'], res).map(dynamoRecordToRecord)
+      )
+
   const saveEnrollment = async (
     { courseId, studentId }: EnrollmentInput,
     id?: string
@@ -84,7 +107,8 @@ export const enrollmentRepositoryFactory = (client: DynamoClient) => {
       sk: addPrefix(_courseId, COURSE_PREFIX),
       gsi1_pk: addPrefix(_courseId, COURSE_PREFIX),
       gsi1_sk: addPrefix(_id, ENROLLMENT_PREFIX),
-      studentId: _studentId,
+      gsi2_pk: addPrefix(_studentId, STUDENT_PREFIX),
+      gsi2_sk: addPrefix(_id, ENROLLMENT_PREFIX),
       date,
       entityType
     }
@@ -104,6 +128,7 @@ export const enrollmentRepositoryFactory = (client: DynamoClient) => {
   return {
     getEnrollmentById,
     getEnrollmentsByCourseId,
+    getEnrollmentsByStudentId,
     saveEnrollment
   }
 }

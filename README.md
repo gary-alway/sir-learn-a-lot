@@ -79,8 +79,6 @@ query exploreDb {
     }
   }
 }
-
-
 ```
 
 ## AWS commands
