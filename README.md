@@ -13,8 +13,9 @@ GraphQl API and single table DynamoDb data store for an online learning platform
 - [AWS commands](#aws-commands)
 - [Table design](#table-design)
   - [ERD](#erd)
-  - [Access patterns](#access-patterns)
   - [Key prefixes](#key-prefixes)
+  - [Indexes](#indexes)
+  - [Access patterns](#access-patterns)
 
 ## Requirements
 
@@ -99,6 +100,23 @@ awslocal dynamodb scan --table-name sir-learn-a-lot --index-name gsi2
 
 ![erd](./design/erd.svg)
 
+### Key prefixes
+
+- `c#` = course
+- `s#` = student
+- `t#` = track
+- `e#` = enrollment
+- `p#` = preference
+- `h#` = chapter
+
+### Indexes
+
+![primary](./design/ddbPrimaryKey.png)
+
+![GSI 1](./design/ddbGsi1.png)
+
+![GSI 2](./design/ddbGsi2.png)
+
 ### Access patterns
 
 - get all tracks (gsi1)
@@ -113,12 +131,3 @@ awslocal dynamodb scan --table-name sir-learn-a-lot --index-name gsi2
 - get track preferences by student
 - get chapters by id (gsi1)
 - get chapters by course
-
-### Key prefixes
-
-- `c#` = course
-- `s#` = student
-- `t#` = track
-- `e#` = enrollment
-- `p#` = preference
-- `h#` = chapter

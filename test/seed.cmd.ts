@@ -4,6 +4,7 @@ import {
   chapterRepository,
   courseRepository,
   enrollmentRepository,
+  preferenceRepository,
   studentRepository,
   trackRepository
 } from '../src/constants'
@@ -66,19 +67,23 @@ const seedDb = async () => {
     })
   )
 
+  const studentId = students[students.length - 1].id
+
   await enrollmentRepository.saveEnrollment({
-    studentId: students[students.length - 1].id,
+    studentId: studentId,
     courseId: _courses[_courses.length - 1].id
   })
   await enrollmentRepository.saveEnrollment({
-    studentId: students[students.length - 1].id,
+    studentId: studentId,
     courseId: _courses[_courses.length - 2].id
   })
 
-  console.log(
-    'Student with 2 enrollments only',
-    students[students.length - 1].id
-  )
+  await preferenceRepository.savePreference({
+    studentId,
+    trackId: tracks[0].id
+  })
+
+  console.log('Student with 2 enrollments and track preference', studentId)
 }
 
 seedDb()
