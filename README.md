@@ -7,7 +7,7 @@ GraphQl API and single table DynamoDb data store for an online learning platform
   <img src="/design/DynamoDB.png" width="100" />
 </p>
 
-- [Requirements](#requirements)
+- [Prerequisites](#prerequisites)
 - [Environment setup](#environment-setup)
 - [Local development](#local-development)
 - [AWS commands](#aws-commands)
@@ -17,11 +17,9 @@ GraphQl API and single table DynamoDb data store for an online learning platform
   - [Indexes](#indexes)
   - [Access patterns](#access-patterns)
 
-## Requirements
+## Prerequisites
 
 - [docker](https://www.docker.com/)
-- [localstack](https://localstack.cloud/)
-- [awslocal](https://github.com/localstack/awscli-local)
 
 ## Environment setup
 
