@@ -58,8 +58,8 @@ export const trackRepositoryFactory = (client: DynamoClient) => {
     const record = {
       pk: addPrefix(_id, TRACK_PREFIX),
       sk: addPrefix(_id, TRACK_PREFIX),
-      gsi1_pk: entityType, // enable getting all tracks
-      gsi1_sk: _id, // todo: move this to gsi2 and implement the same for courses and students
+      gsi1_pk: entityType,
+      gsi1_sk: _id,
       name,
       entityType
     }
