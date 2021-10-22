@@ -193,7 +193,7 @@ The single table design patterns used in this project apply to all NoSQL databas
 - scales horizontally
 - the data in a NoSQL is still **relational** (otherwise we would probably just put it in S3!!!)
 
-#### NoSQL anti patters
+#### NoSQL anti patterns
 
 We should not use a NoSQL database with multiple tables to model relational data:
 
