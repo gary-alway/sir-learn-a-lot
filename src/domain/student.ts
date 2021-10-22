@@ -16,6 +16,9 @@ export class Student {
   @Field()
   email!: string
 
+  @Field()
+  xp!: number
+
   @Field(() => [Preference])
   preferences: Preference[] | undefined
 

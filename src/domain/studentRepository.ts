@@ -57,12 +57,38 @@ export const studentRepositoryFactory = (client: DynamoClient) => {
         return pathOr<Student[]>([], ['Items'], res).map(dynamoRecordToRecord)
       })
 
-  const saveStudent = async (
-    { firstName, lastName, email }: StudentInput,
-    id?: string
-  ): Promise<Student> => {
-    const _id = id ? removePrefix(id, STUDENT_PREFIX) : uuidv4()
+  interface AtomicUpdateStudentXp {
+    studentId: string
+    xp: number
+  }
+
+  const atomicUpdateStudentXp = async ({
+    studentId,
+    xp
+  }: AtomicUpdateStudentXp) => {
+    const _studentId = removePrefix(studentId, STUDENT_PREFIX)
+
+    await client.updateItem({
+      TableName: DDB_TABLE,
+      Key: {
+        pk: addPrefix(_studentId, STUDENT_PREFIX),
+        sk: addPrefix(_studentId, STUDENT_PREFIX)
+      },
+      UpdateExpression: 'set xp = xp + :inc',
+      ExpressionAttributeValues: {
+        ':inc': xp
+      }
+    })
+  }
+
+  const saveStudent = async ({
+    firstName,
+    lastName,
+    email
+  }: StudentInput): Promise<Student> => {
+    const _id = uuidv4()
     const _email = email.toLocaleLowerCase()
+    const xp = 0
 
     const record = {
       pk: addPrefix(_id, STUDENT_PREFIX),
@@ -71,6 +97,7 @@ export const studentRepositoryFactory = (client: DynamoClient) => {
       gsi1_sk: addPrefix(_id, STUDENT_PREFIX),
       firstName,
       lastName,
+      xp,
       entityType
     }
 
@@ -81,6 +108,7 @@ export const studentRepositoryFactory = (client: DynamoClient) => {
       firstName,
       lastName,
       email: _email,
+      xp,
       preferences: undefined,
       enrollments: undefined
     }
@@ -89,6 +117,7 @@ export const studentRepositoryFactory = (client: DynamoClient) => {
   return {
     getStudentById,
     getStudentByEmail,
-    saveStudent
+    saveStudent,
+    atomicUpdateStudentXp
   }
 }

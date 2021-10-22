@@ -56,8 +56,8 @@ export const progressRepositoryFactory = (client: DynamoClient) => {
     const _chapterId = removePrefix(chapterId, CHAPTER_PREFIX)
     const _enrollmentId = removePrefix(enrollmentId, CHAPTER_PREFIX)
 
-    const compositeSk = `${PROGRESS_PREFIX}#${ENROLLMENT_PREFIX}#${_enrollmentId}#${CHAPTER_PREFIX}#${_chapterId}`
-    const compositeGsi1Sk = `${PROGRESS_PREFIX}#${STUDENT_PREFIX}#${_studentId}#${CHAPTER_PREFIX}#${_chapterId}`
+    const compositeSk = `${PROGRESS_PREFIX}${ENROLLMENT_PREFIX}${_enrollmentId}#${CHAPTER_PREFIX}${_chapterId}`
+    const compositeGsi1Sk = `${PROGRESS_PREFIX}${STUDENT_PREFIX}${_studentId}#${CHAPTER_PREFIX}${_chapterId}`
 
     const record = {
       pk: addPrefix(_studentId, STUDENT_PREFIX),

@@ -80,7 +80,7 @@ yarn local:down
 yarn dev
 ```
 
-[GraphiQl running on localhost port 3000](http://localhost:3000/graphql)
+[GraphiQl running on localhost port 9000](http://localhost:9000/graphql)
 
 Explore the full database content:
 
@@ -123,9 +123,19 @@ query exploreDb {
 ## AWS commands
 
 ```bash
+# dynamodb streams
+awslocal dynamodbstreams list-streams
+
+# dynamodb
+awslocal dynamodb list-tables
 awslocal dynamodb scan --table-name sir-learn-a-lot
 awslocal dynamodb scan --table-name sir-learn-a-lot --index-name gsi1
 awslocal dynamodb scan --table-name sir-learn-a-lot --index-name gsi2
+
+# sqs
+awslocal sqs list-queues
+awslocal sqs receive-message --queue-url "http://localhost:4566/queue/stream-dlq" --max-number-of-messages 10
+awslocal sqs delete-message --queue-url "http://localhost:4566/queue/stream-dlq" --receipt-handle <handle>
 ```
 
 ## Table design
@@ -146,7 +156,7 @@ awslocal dynamodb scan --table-name sir-learn-a-lot --index-name gsi2
 
 ### Indexes
 
-Generated using [NoSQL Workbench](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/workbench.html)
+Generated using [NoSQL Workbench](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/workbench.html). A JSON format export is [available here](./design/nosqlWorkbench.json)
 
 ![primary](./design/ddbPrimaryKey.png)
 
@@ -220,6 +230,7 @@ We should not use a NoSQL database with multiple tables to model relational data
 
 ## DynamoDB tips and tricks
 
+- **always** develop locally first using localstack or DynamoDB local! Avoid pain and long feedback loops with outcomes that are tricky to debug
 - watch the videos in the [references section](#references) from Rick and Alex multiple times until the penny finally drops!
 - use [NoSQL workbench](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/workbench.html) for modelling data and indexes
 - don't store large documents
@@ -229,17 +240,16 @@ We should not use a NoSQL database with multiple tables to model relational data
 - remember that GSI indexes also consume RCUs / WCUs and are potentially subject to throttling
 - ensure your indexes ensure the data is distributed across the table space
 - use composite sort keys to model hierarchical relationships
-- use data pointers to implement document versioning
+- use data pointers to implement document versioning (see chapter repository implementation and design)
 - use [global tables](https://aws.amazon.com/dynamodb/global-tables/) for world wide domination of your app!
 - use [TTL](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/TTL.html) to clear out stale data
-- use [streams](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Streams.html) + Lambda to implement database triggers (use an SQS DLQ to manage failed processes)
+- use [streams](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Streams.html) + Lambda to implement database triggers (use an SQS DLQ to manage failed processes otherwise the stream will block infinitely)
 - use [LSI](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/LSI.html) to resort the data within a partition and allow querying across different attributes
 - only use [DAX](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/DAX.html) for **read intensive** applications
 - understand how [partitions](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/HowItWorks.Partitions.html) work
+- use SNS, SQS, Lambda and Dynamo to develop highly performant, scalable, elastic, asynchronous, decoupled micro-services
 
 ## Todo
 
-- insert the student XP aggregate data in the streams lambda
-- implement a DLQ for the streams lambda
-- add GQL preferences resolver with mutation
-- add chapter content versioning using a data pointer
+- add GQL preferences resolver with mutation for adding student track preferences
+- add chapter content versioning using a data pointers, [e.g.](https://github.com/gary-alway/dynamodb-design-patterns/blob/master/test/patterns/useSortKeysForVersionControl.test.ts)

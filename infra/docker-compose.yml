@@ -9,7 +9,7 @@ services:
     ports:
       - '4566:4566'
     environment:
-      - SERVICES=${SERVICES-cloudformation,dynamodb}
+      - SERVICES=${SERVICES-cloudformation,dynamodb,sqs}
       - DOCKER_HOST=unix:///var/run/docker.sock
       - HOSTNAME_EXTERNAL=localhost
 

@@ -1,0 +1,320 @@
+{
+  "ModelName": "Sir learn a lot",
+  "ModelMetadata": {
+    "Author": "Gary Alway",
+    "DateCreated": "Oct 21, 2021, 09:16 PM",
+    "DateLastModified": "Oct 22, 2021, 09:51 AM",
+    "Description": "A single table DynamoDb data store for an online learning platform",
+    "AWSService": "Amazon DynamoDB",
+    "Version": "3.0"
+  },
+  "DataModel": [
+    {
+      "TableName": "sir-learn-a-lot",
+      "KeyAttributes": {
+        "PartitionKey": {
+          "AttributeName": "pk",
+          "AttributeType": "S"
+        },
+        "SortKey": {
+          "AttributeName": "sk",
+          "AttributeType": "S"
+        }
+      },
+      "NonKeyAttributes": [
+        {
+          "AttributeName": "gsi1_pk",
+          "AttributeType": "S"
+        },
+        {
+          "AttributeName": "gsi1_sk",
+          "AttributeType": "S"
+        },
+        {
+          "AttributeName": "gsi2_pk",
+          "AttributeType": "S"
+        },
+        {
+          "AttributeName": "gsi2_sk",
+          "AttributeType": "S"
+        },
+        {
+          "AttributeName": "name",
+          "AttributeType": "S"
+        },
+        {
+          "AttributeName": "email",
+          "AttributeType": "S"
+        },
+        {
+          "AttributeName": "content",
+          "AttributeType": "S"
+        },
+        {
+          "AttributeName": "entityType",
+          "AttributeType": "S"
+        },
+        {
+          "AttributeName": "marker",
+          "AttributeType": "S"
+        },
+        {
+          "AttributeName": "xp",
+          "AttributeType": "N"
+        }
+      ],
+      "GlobalSecondaryIndexes": [
+        {
+          "IndexName": "gsi_1",
+          "KeyAttributes": {
+            "PartitionKey": {
+              "AttributeName": "gsi1_pk",
+              "AttributeType": "S"
+            },
+            "SortKey": {
+              "AttributeName": "gsi1_sk",
+              "AttributeType": "S"
+            }
+          },
+          "Projection": {
+            "ProjectionType": "ALL"
+          }
+        },
+        {
+          "IndexName": "gsi2",
+          "KeyAttributes": {
+            "PartitionKey": {
+              "AttributeName": "gsi2_pk",
+              "AttributeType": "S"
+            },
+            "SortKey": {
+              "AttributeName": "gsi2_sk",
+              "AttributeType": "S"
+            }
+          },
+          "Projection": {
+            "ProjectionType": "ALL"
+          }
+        }
+      ],
+      "TableData": [
+        {
+          "pk": {
+            "S": "t#1234"
+          },
+          "sk": {
+            "S": "t#1234"
+          },
+          "gsi1_pk": {
+            "S": "track"
+          },
+          "gsi1_sk": {
+            "S": "1234"
+          },
+          "name": {
+            "S": "track 1"
+          },
+          "entityType": {
+            "S": "track"
+          }
+        },
+        {
+          "pk": {
+            "S": "c#123"
+          },
+          "sk": {
+            "S": "t#1234"
+          },
+          "gsi1_pk": {
+            "S": "t#1234"
+          },
+          "gsi1_sk": {
+            "S": "c#123"
+          },
+          "name": {
+            "S": "course 1"
+          },
+          "entityType": {
+            "S": "course"
+          }
+        },
+        {
+          "pk": {
+            "S": "c#123"
+          },
+          "sk": {
+            "S": "e#99"
+          },
+          "gsi1_pk": {
+            "S": "e#99"
+          },
+          "gsi1_sk": {
+            "S": "c#123"
+          },
+          "gsi2_pk": {
+            "S": "s#007"
+          },
+          "gsi2_sk": {
+            "S": "e#99"
+          },
+          "entityType": {
+            "S": "enrolment"
+          }
+        },
+        {
+          "pk": {
+            "S": "c#123"
+          },
+          "sk": {
+            "S": "h#1"
+          },
+          "gsi1_pk": {
+            "S": "h#1"
+          },
+          "gsi1_sk": {
+            "S": "c#123"
+          },
+          "content": {
+            "S": "chapter 1 content here..."
+          },
+          "entityType": {
+            "S": "chapter"
+          }
+        },
+        {
+          "pk": {
+            "S": "c#123"
+          },
+          "sk": {
+            "S": "h#2"
+          },
+          "gsi1_pk": {
+            "S": "h#2"
+          },
+          "gsi1_sk": {
+            "S": "c#123"
+          },
+          "content": {
+            "S": "chapter 2 content here ..."
+          },
+          "entityType": {
+            "S": "chapter"
+          }
+        },
+        {
+          "pk": {
+            "S": "s#007"
+          },
+          "sk": {
+            "S": "s#007"
+          },
+          "gsi1_pk": {
+            "S": "s#james.bond@hmss.gov.uk"
+          },
+          "gsi1_sk": {
+            "S": "s#007"
+          },
+          "name": {
+            "S": "James Bond"
+          },
+          "email": {
+            "S": "james.bond@hmss.gov.uk"
+          },
+          "entityType": {
+            "S": "student"
+          },
+          "xp": {
+            "N": "15000"
+          }
+        },
+        {
+          "pk": {
+            "S": "s#007"
+          },
+          "sk": {
+            "S": "t#1234"
+          },
+          "entityType": {
+            "S": "preference"
+          }
+        },
+        {
+          "pk": {
+            "S": "s#007"
+          },
+          "sk": {
+            "S": "g#e#99#h1"
+          },
+          "gsi1_pk": {
+            "S": "e#99"
+          },
+          "gsi1_sk": {
+            "S": "g#s#007#h1"
+          },
+          "entityType": {
+            "S": "progress"
+          },
+          "marker": {
+            "S": "section 1 complete"
+          },
+          "xp": {
+            "N": "3500"
+          }
+        },
+        {
+          "pk": {
+            "S": "s#007"
+          },
+          "sk": {
+            "S": "g#e#99#h2"
+          },
+          "gsi1_pk": {
+            "S": "e#99"
+          },
+          "gsi1_sk": {
+            "S": "g#s#007#h2"
+          },
+          "entityType": {
+            "S": "progress"
+          },
+          "marker": {
+            "S": "section 1 complete"
+          },
+          "xp": {
+            "N": "500"
+          }
+        }
+      ],
+      "DataAccess": {
+        "MySql": {}
+      },
+      "BillingMode": "PROVISIONED",
+      "ProvisionedCapacitySettings": {
+        "ProvisionedThroughput": {
+          "ReadCapacityUnits": 5,
+          "WriteCapacityUnits": 5
+        },
+        "AutoScalingRead": {
+          "ScalableTargetRequest": {
+            "MinCapacity": 1,
+            "MaxCapacity": 10,
+            "ServiceRole": "AWSServiceRoleForApplicationAutoScaling_DynamoDBTable"
+          },
+          "ScalingPolicyConfiguration": {
+            "TargetValue": 70
+          }
+        },
+        "AutoScalingWrite": {
+          "ScalableTargetRequest": {
+            "MinCapacity": 1,
+            "MaxCapacity": 10,
+            "ServiceRole": "AWSServiceRoleForApplicationAutoScaling_DynamoDBTable"
+          },
+          "ScalingPolicyConfiguration": {
+            "TargetValue": 70
+          }
+        }
+      }
+    }
+  ]
+}

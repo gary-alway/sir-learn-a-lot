@@ -13,6 +13,12 @@ import {
 import { AWSError } from 'aws-sdk'
 import { PromiseResult } from 'aws-sdk/lib/request'
 
+export interface BaseDynamoRecord {
+  pk: string
+  sk: string
+  entityType: string
+}
+
 export interface DynamoClient {
   scan: (
     TableName: string

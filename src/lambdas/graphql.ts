@@ -8,7 +8,6 @@ import {
   EnrollmentResolver,
   ProgressResolver
 } from '../domain/enrollmentResolver'
-import { ApolloServerPluginLandingPageGraphQLPlayground } from 'apollo-server-core'
 import { APIGatewayEvent, Context, Callback } from 'aws-lambda'
 
 export async function handler(
@@ -39,8 +38,7 @@ export async function handler(
 
   const server = new ApolloServer({
     schema,
-    introspection: true,
-    plugins: [ApolloServerPluginLandingPageGraphQLPlayground()]
+    introspection: true
   })
 
   const handler = server.createHandler()

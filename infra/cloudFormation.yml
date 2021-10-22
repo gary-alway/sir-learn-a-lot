@@ -1,5 +1,9 @@
 ---
 Resources:
+  DLQ:
+    Type: AWS::SQS::Queue
+    Properties:
+      QueueName: stream-dlq
   DDBTable:
     Type: AWS::DynamoDB::Table
     Properties:
