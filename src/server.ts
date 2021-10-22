@@ -5,7 +5,10 @@ import { buildSchema } from 'type-graphql'
 import { PreferenceResolver, StudentResolver } from './domain/studentResolver'
 import { TrackResolver } from './domain/trackResolver'
 import { CourseResolver } from './domain/courseResolver'
-import { EnrollmentResolver } from './domain/enrollmentResolver'
+import {
+  EnrollmentResolver,
+  ProgressResolver
+} from './domain/enrollmentResolver'
 
 async function start() {
   const app = express()
@@ -16,7 +19,8 @@ async function start() {
       TrackResolver,
       CourseResolver,
       EnrollmentResolver,
-      PreferenceResolver
+      PreferenceResolver,
+      ProgressResolver
     ],
     emitSchemaFile: true
   })

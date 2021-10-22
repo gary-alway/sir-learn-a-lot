@@ -1,5 +1,6 @@
 import { Field, InputType, ObjectType } from 'type-graphql'
 import { Course } from './course'
+import { Progress } from './progress'
 import { Student } from './student'
 
 @ObjectType()
@@ -21,6 +22,9 @@ export class Enrollment {
 
   @Field(() => Student)
   student: Student | undefined
+
+  @Field(() => [Progress])
+  progress: Progress | undefined
 }
 
 @InputType()

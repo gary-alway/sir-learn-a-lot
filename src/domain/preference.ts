@@ -11,10 +11,10 @@ export class Preference {
   trackId!: string
 
   @Field(() => Student)
-  student: Student[] | undefined
+  student: Student | undefined
 
   @Field(() => Track)
-  track: Track[] | undefined
+  track: Track | undefined
 }
 
 @InputType()

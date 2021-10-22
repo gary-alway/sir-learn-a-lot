@@ -120,7 +120,8 @@ export const enrollmentRepositoryFactory = (client: DynamoClient) => {
       studentId: _studentId,
       date,
       course: undefined,
-      student: undefined
+      student: undefined,
+      progress: undefined
     }
   }
 

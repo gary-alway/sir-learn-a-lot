@@ -20,6 +20,8 @@ GraphQl API and single table DynamoDb data store for an online learning platform
 ## Prerequisites
 
 - [docker](https://www.docker.com/)
+- [localstack](https://localstack.cloud/)
+- [awslocal](https://github.com/localstack/awscli-local)
 
 ## Environment setup
 
@@ -66,6 +68,10 @@ query exploreDb {
       }
       enrollments {
         id
+        progress {
+          xp
+          marker
+        }
         student {
           id
           firstName
@@ -106,6 +112,7 @@ awslocal dynamodb scan --table-name sir-learn-a-lot --index-name gsi2
 - `e#` = enrollment
 - `p#` = preference
 - `h#` = chapter
+- `g#` = progress
 
 ### Indexes
 
@@ -131,3 +138,4 @@ Generated using [NoSQL Workbench](https://docs.aws.amazon.com/amazondynamodb/lat
 - get track preferences by student
 - get chapters by id (gsi1)
 - get chapters by course
+- get progress by enrollment id (gsi1)
