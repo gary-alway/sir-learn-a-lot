@@ -1,3 +1,5 @@
+![knight](./design/knight.jpeg)
+
 # Sir learn a lot
 
 Lambda GraphQl API with a single table DynamoDb data store for an online learning platform.
