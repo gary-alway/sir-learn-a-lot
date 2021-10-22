@@ -44,3 +44,5 @@ Resources:
               KeyType: HASH
             - AttributeName: gsi2_sk
               KeyType: RANGE
+      StreamSpecification:
+        StreamViewType: NEW_AND_OLD_IMAGES

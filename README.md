@@ -10,6 +10,7 @@ This project is a _proof of concept_ only and therefore has no unit tests.
 </p>
 
 - [Prerequisites](#prerequisites)
+- [Architecture](#architecture)
 - [Environment setup](#environment-setup)
 - [Local development](#local-development)
 - [AWS commands](#aws-commands)
@@ -24,6 +25,10 @@ This project is a _proof of concept_ only and therefore has no unit tests.
 - [docker](https://www.docker.com/)
 - [localstack](https://localstack.cloud/)
 - [awslocal](https://github.com/localstack/awscli-local)
+
+### Architecture
+
+![architecture](./design/architecture.svg)
 
 ## Environment setup
 
