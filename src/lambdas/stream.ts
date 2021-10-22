@@ -22,6 +22,6 @@ export const handler = async (event: DynamoDBStreamEvent): Promise<void> => {
       progressEvents.map(studentRepository.atomicUpdateStudentXp)
     )
   } catch (err) {
-    await sqsClient.sendMessage(STREAM_DLQ, JSON.stringify({ event }))
+    await sqsClient.sendMessage(STREAM_DLQ, JSON.stringify({ event, err }))
   }
 }
