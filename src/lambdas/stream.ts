@@ -19,10 +19,7 @@ export const handler = async (event: DynamoDBStreamEvent): Promise<void> => {
     }).filter(truthy)
 
     await Promise.all(
-      progressEvents.map(
-        async ({ studentId, xp }) =>
-          await studentRepository.atomicUpdateStudentXp({ studentId, xp })
-      )
+      progressEvents.map(studentRepository.atomicUpdateStudentXp)
     )
   } catch (err) {
     await sqsClient.sendMessage(STREAM_DLQ, JSON.stringify({ event }))
