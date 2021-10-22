@@ -1,10 +1,12 @@
 # Sir learn a lot
 
-GraphQl API and single table DynamoDb data store for an online learning platform.
+Lambda GraphQl API with a single table DynamoDb data store for an online learning platform.
+This project is a _proof of concept_ only and therefore has no unit tests.
 
 <p float="left">
   <img src="./design/GraphQl.png" width="100" /> 
   <img src="/design/DynamoDB.png" width="100" />
+  <img src="./design/Lambda.png" width="100" /> 
 </p>
 
 - [Prerequisites](#prerequisites)

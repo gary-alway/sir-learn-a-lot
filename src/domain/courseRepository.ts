@@ -1,8 +1,8 @@
 import { omit, pathOr } from 'ramda'
-import { DynamoClient } from '../dynamoClient'
+import { DynamoClient } from '../lib/dynamoClient'
 import { DDB_TABLE } from '../constants'
 import { v4 as uuidv4 } from 'uuid'
-import { addPrefix, removePrefix } from '../utils'
+import { addPrefix, removePrefix } from '../lib/utils'
 import { Course, CourseInput } from './course'
 import { TRACK_PREFIX } from './trackRepository'
 import { QueryInput } from 'aws-sdk/clients/dynamodb'
@@ -12,9 +12,9 @@ const entityType = 'course'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const dynamoRecordToRecord = (record: any): Course => {
-  const { pk, sk, gsi1_pk, gsi1_sk, ...data } = record
+  const { pk, sk, ...data } = record
 
-  return omit(['entityType'], {
+  return omit(['gsi1_pk', 'gsi1_sk', 'entityType'], {
     ...data,
     id: removePrefix(pk, COURSE_PREFIX),
     trackId: removePrefix(sk, TRACK_PREFIX)

@@ -1,0 +1,53 @@
+service: sir-learn-a-lot
+
+plugins:
+  - serverless-offline
+  - serverless-plugin-typescript
+  - serverless-offline-dynamodb-streams
+  - serverless-localstack
+
+custom:
+  serverless-offline:
+    httpPort: 3000
+    lambdaPort: 3001
+  serverless-offline-dynamodb-streams:
+    apiVersion: '2013-12-02'
+    endpoint: http://0.0.0.0:4566
+    region: us-east-1
+    accessKeyId: root
+    secretAccessKey: root
+    skipCacheInvalidation: false
+    readInterval: 500
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+  memorySize: 256
+  timeout: 30
+  region: us-east-1
+
+functions:
+  graphqlGetHandler:
+    handler: src/lambdas/graphql.handler
+    events:
+      - http:
+          path: /graphql
+          method: GET
+
+  graphqlPostHandler:
+    handler: src/lambdas/graphql.handler
+    events:
+      - http:
+          path: /graphql
+          method: POST
+
+  # stream:
+  #   handler: src/lambdas/stream.handler
+  #   events:
+  #     - stream:
+  #         enabled: true
+  #         type: dynamodb
+  #         arn: arn:aws:dynamodb:us-east-1:000000000000:table/images/stream/2021-09-08T08:10:23.588
+  #         # todo: this comes from `awslocal dynamodbstreams list-streams`, so need to find out how to do this dynamically, e.g.
+  #         # tableName: images
+  #         # https://www.npmjs.com/package/serverless-offline-dynamodb-streams

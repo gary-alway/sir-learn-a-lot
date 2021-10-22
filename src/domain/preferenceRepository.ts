@@ -1,6 +1,6 @@
-import { DynamoClient } from '../dynamoClient'
+import { DynamoClient } from '../lib/dynamoClient'
 import { DDB_TABLE } from '../constants'
-import { addPrefix, removePrefix } from '../utils'
+import { addPrefix, removePrefix } from '../lib/utils'
 import { Preference, PreferenceInput } from './preference'
 import { STUDENT_PREFIX } from './studentRepository'
 import { TRACK_PREFIX } from './trackRepository'

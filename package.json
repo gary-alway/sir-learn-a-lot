@@ -7,21 +7,17 @@
   "scripts": {
     "local:up": "make -C ./infra up",
     "local:down": "make -C ./infra down",
-    "start": "NODE_ENV=prod node dist/src/server.js",
-    "dev": "WATCH_MODE=true NODE_ENV=dev nodemon --exec 'ts-node --files --project tsconfig.json' src/server.ts",
+    "typecheck": "tsc --noEmit",
+    "dev": "serverless offline start --noPrependStageInUrl",
     "lint": "yarn eslint . --ext .js,.jsx,.ts,.tsx",
-    "build": "tsc --project tsconfig.json",
-    "test": "jest --maxWorkers=4 src",
-    "test:acceptance": "jest --runInBand ./test/acceptance",
     "format": "prettier --write '{src,test}/**/*.{js,ts,json,md}'",
     "purge": "ts-node --files --project tsconfig.json test/purge.cmd",
     "seed": "ts-node --files --project tsconfig.json test/seed.cmd"
   },
   "dependencies": {
+    "apollo-server-lambda": "^3.4.0",
     "aws-sdk": "^2.1008.0",
     "class-validator": "^0.13.1",
-    "express": "^4.17.1",
-    "express-graphql": "^0.12.0",
     "graphql": "^15.6.1",
     "ramda": "^0.27.1",
     "reflect-metadata": "^0.1.13",
@@ -29,8 +25,6 @@
     "uuid": "^8.3.2"
   },
   "devDependencies": {
-    "@types/express": "^4.17.13",
-    "@types/express-graphql": "^0.9.0",
     "@types/faker": "^5.5.9",
     "@types/graphql": "^14.5.0",
     "@types/node": "^16.11.0",
@@ -42,6 +36,11 @@
     "faker": "^5.5.3",
     "nodemon": "^2.0.13",
     "prettier": "^2.4.1",
+    "serverless": "^2.64.1",
+    "serverless-localstack": "^0.4.35",
+    "serverless-offline": "^8.2.0",
+    "serverless-offline-dynamodb-streams": "^5.0.0",
+    "serverless-plugin-typescript": "^2.1.0",
     "ts-node": "^10.3.0",
     "typescript": "^4.4.4"
   }

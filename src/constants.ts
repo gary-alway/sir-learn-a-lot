@@ -6,7 +6,7 @@ import { preferenceRepositoryFactory } from './domain/preferenceRepository'
 import { progressRepositoryFactory } from './domain/progressRepository'
 import { studentRepositoryFactory } from './domain/studentRepository'
 import { trackRepositoryFactory } from './domain/trackRepository'
-import { createDynamoClient } from './dynamoClient'
+import { createDynamoClient } from './lib/dynamoClient'
 
 export const AWS_CONFIG = {
   region: 'us-east-1',
