@@ -23,6 +23,8 @@ This project is a _proof of concept_ only and therefore has no unit tests.
   - [Indexes](#indexes)
   - [Access patterns](#access-patterns)
 - [NoSQL single table design theory](#nosql-single-table-design-theory)
+- [DynamoDB tips and tricks](#dynamodb-tips-and-tricks)
+- [TODO](#todo)
 
 ## References
 
@@ -216,7 +218,7 @@ We should not use a NoSQL database with multiple tables to model relational data
 - prove the application before you pay for it
 - streams + lambda act as database triggers allowing you to atomically write aggregate data back into the database in a process outside of the database
 
-#### DynamoDB tips and tricks
+## DynamoDB tips and tricks
 
 - watch the videos in the [references section](#references) from Rick and Alex multiple times until the penny finally drops!
 - use [NoSQL workbench](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/workbench.html) for modelling data and indexes
@@ -234,3 +236,10 @@ We should not use a NoSQL database with multiple tables to model relational data
 - use [LSI](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/LSI.html) to resort the data within a partition and allow querying across different attributes
 - only use [DAX](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/DAX.html) for **read intensive** applications
 - understand how [partitions](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/HowItWorks.Partitions.html) work
+
+## Todo
+
+- insert the student XP aggregate data in the streams lambda
+- implement a DLQ for the streams lambda
+- add GQL preferences resolver with mutation
+- add chapter content versioning using a data pointer
