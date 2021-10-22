@@ -230,7 +230,7 @@ We should not use a NoSQL database with multiple tables to model relational data
 
 ## DynamoDB tips and tricks
 
-- **always** develop locally first using localstack or DynamoDB local! Avoid pain and long feedback loops with outcomes that are tricky to debug
+- **always** develop locally first using localstack or DynamoDB local. Avoid pain and long feedback loops with outcomes that are tricky to debug
 - watch the videos in the [references section](#references) from Rick and Alex multiple times until the penny finally drops!
 - use [NoSQL workbench](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/workbench.html) for modelling data and indexes
 - don't store large documents
@@ -238,7 +238,7 @@ We should not use a NoSQL database with multiple tables to model relational data
 - implement a layering of patterns and add additional indexes when necessary
 - avoid [hot partitions](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/bp-partition-key-design.html)
 - remember that GSI indexes also consume RCUs / WCUs and are potentially subject to throttling
-- ensure your indexes ensure the data is distributed across the table space
+- ensure your indexes distribute the data evenly across the table space
 - use composite sort keys to model hierarchical relationships
 - use data pointers to implement document versioning (see chapter repository implementation and design)
 - use [global tables](https://aws.amazon.com/dynamodb/global-tables/) for world wide domination of your app!
