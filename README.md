@@ -189,7 +189,7 @@ The single table design patterns used in this project apply to all NoSQL databas
 - queries minimize and efficiently make use of CPU (no complex joins) because CPU is one of the most expensive data center components
 - not good at reshaping the data
 - not suitable for ad hoc queries
-- consistently scalable to extremely large datasets
+- consistent, predictable performance at scale
 - scales horizontally
 - the data in a NoSQL is still **relational** (otherwise we would probably just put it in S3!!!)
 
@@ -215,3 +215,22 @@ We should not use a NoSQL database with multiple tables to model relational data
 - fail fast
 - prove the application before you pay for it
 - streams + lambda act as database triggers allowing you to atomically write aggregate data back into the database in a process outside of the database
+
+#### DynamoDB tips and tricks
+
+- watch the videos in the [references section](#references) from Rick and Alex multiple times until the penny finally drops!
+- use [NoSQL workbench](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/workbench.html) for modelling data and indexes
+- don't store large documents
+- use indexes to replace joins
+- implement a layering of patterns and add additional indexes when necessary
+- avoid [hot partitions](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/bp-partition-key-design.html)
+- remember that GSI indexes also consume RCUs / WCUs and are potentially subject to throttling
+- ensure your indexes ensure the data is distributed across the table space
+- use composite sort keys to model hierarchical relationships
+- use data pointers to implement document versioning
+- use [global tables](https://aws.amazon.com/dynamodb/global-tables/) for world wide domination of your app!
+- use [TTL](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/TTL.html) to clear out stale data
+- use [streams](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Streams.html) + Lambda to implement database triggers (use an SQS DLQ to manage failed processes)
+- use [LSI](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/LSI.html) to resort the data within a partition and allow querying across different attributes
+- only use [DAX](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/DAX.html) for **read intensive** applications
+- understand how [partitions](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/HowItWorks.Partitions.html) work
