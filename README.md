@@ -24,7 +24,7 @@ This project is a _proof of concept_ only and therefore has no unit tests.
   - [Access patterns](#access-patterns)
 - [NoSQL single table design theory](#nosql-single-table-design-theory)
 - [DynamoDB tips and tricks](#dynamodb-tips-and-tricks)
-- [TODO](#todo)
+- [Known issues](#known-issues)
 
 ## References
 
@@ -251,6 +251,6 @@ We should not use a NoSQL database with multiple tables to model relational data
 - use SNS, SQS, Lambda and Dynamo to develop highly performant, scalable, elastic, asynchronous, decoupled micro-services
 - use [elastic search with DynamoDB](https://aws.amazon.com/blogs/aws/new-logstash-plugin-search-dynamodb-content-using-elasticsearch/) for full text searching
 
-## Todo
+## Known issues
 
-- add GQL preferences resolver with mutation for adding student track preferences
+- `serverless-offline-dynamodb-streams` is not always stable and can crash unexpectedly with `----- Unknown error`
