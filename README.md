@@ -80,7 +80,7 @@ yarn local:down
 yarn dev
 ```
 
-[GraphiQl running on localhost port 9000](http://localhost:9000/graphql)
+Server is running on [http://localhost:9000/graphql](http://localhost:9000/graphql)
 
 Explore the full database content:
 
