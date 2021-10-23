@@ -28,13 +28,6 @@ provider:
   region: us-east-1
 
 functions:
-  graphqlGetHandler:
-    handler: src/lambdas/graphql.handler
-    events:
-      - http:
-          path: /graphql
-          method: GET
-
   graphqlPostHandler:
     handler: src/lambdas/graphql.handler
     events:

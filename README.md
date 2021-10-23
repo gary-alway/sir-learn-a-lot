@@ -45,7 +45,7 @@ This work is largely taken from and inspired by the following sources from [Rick
 
 ### Architecture
 
-A single `apollo-server-lambda` lambda hosts the GraphQL `GET` and `POST` routes to `/graphql` (for more details [see npm package](https://www.npmjs.com/package/apollo-server-lambda)). A second lambda is listening to the DynamoDB stream in order to atomically update the users xp score as progress is made in the various chapters. The majority of the repository code (which is the most complex code) is boilerplate / formulaic so could be converted into its own DynamoDB single table library but this task is deferred for the scope of this POC. The rest of the code is simple types and GraphQL queries and mutation logic constructed using `type-graphql` then allowing GraphQL and DynamoDB to work their magic! Combined with Lambda this solution represents a high scalable, elastic, dynamic service.
+A single `apollo-server-lambda` lambda hosts the GraphQL `POST` route `/graphql` (for more details [see npm package](https://www.npmjs.com/package/apollo-server-lambda)). A second lambda is listening to the DynamoDB stream in order to atomically update the users xp score as progress is made in the various chapters. The majority of the repository code (which is the most complex code) is boilerplate / formulaic so could be converted into its own DynamoDB single table library but this task is deferred for the scope of this POC. The rest of the code is simple types and GraphQL queries and mutation logic constructed using `type-graphql` then allowing GraphQL and DynamoDB to work their magic! Combined with Lambda this solution represents a high scalable, elastic, dynamic service.
 
 ![architecture](./design/architecture.svg)
 
@@ -253,4 +253,4 @@ We should not use a NoSQL database with multiple tables to model relational data
 
 ## Known issues
 
-- `serverless-offline-dynamodb-streams` is not always stable and can crash unexpectedly with `----- Unknown error`
+- `serverless-offline-dynamodb-streams` is not always stable and can crash unexpectedly with `Unknown error`
