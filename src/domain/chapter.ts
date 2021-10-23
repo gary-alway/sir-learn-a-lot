@@ -14,6 +14,9 @@ export class Chapter {
 
   @Field(() => Course)
   course: Course | undefined
+
+  @Field(() => Number)
+  latest: number | undefined
 }
 
 @InputType()

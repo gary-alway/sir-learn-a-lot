@@ -48,7 +48,7 @@ functions:
       - stream:
           enabled: true
           type: dynamodb
-          arn: arn:aws:dynamodb:us-east-1:000000000000:table/sir-learn-a-lot/stream/2021-10-22T15:39:51.586
+          arn: arn:aws:dynamodb:us-east-1:000000000000:table/sir-learn-a-lot/stream/2021-10-22T21:02:42.946
           # todo: this comes from `awslocal dynamodbstreams list-streams`, so need to find out how to do this dynamically, e.g.
           # tableName: images
           # https://www.npmjs.com/package/serverless-offline-dynamodb-streams

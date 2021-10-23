@@ -177,6 +177,7 @@ Generated using [NoSQL Workbench](https://docs.aws.amazon.com/amazondynamodb/lat
 - get student by email (gsi1)
 - get track preferences by student
 - get chapters by id (gsi1)
+- get chapter by id and version (gsi1)
 - get chapters by course
 - get progress by enrollment id (gsi1)
 
@@ -240,7 +241,7 @@ We should not use a NoSQL database with multiple tables to model relational data
 - remember that GSI indexes also consume RCUs / WCUs and are potentially subject to throttling
 - ensure your indexes distribute the data evenly across the table space
 - use composite sort keys to model hierarchical relationships
-- use data pointers to implement document versioning (see chapter repository implementation and design)
+- use data pointers to implement [number based versioning](https://aws.amazon.com/blogs/database/implementing-version-control-using-amazon-dynamodb/) (see chapter repository implementation and design)
 - use [global tables](https://aws.amazon.com/dynamodb/global-tables/) for world wide domination of your app!
 - use [TTL](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/TTL.html) to clear out stale data
 - use [streams](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Streams.html) + Lambda to implement database triggers (use an SQS DLQ to manage failed processes otherwise the stream will block infinitely)
@@ -248,8 +249,8 @@ We should not use a NoSQL database with multiple tables to model relational data
 - only use [DAX](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/DAX.html) for **read intensive** applications
 - understand how [partitions](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/HowItWorks.Partitions.html) work
 - use SNS, SQS, Lambda and Dynamo to develop highly performant, scalable, elastic, asynchronous, decoupled micro-services
+- use [elastic search with DynamoDB](https://aws.amazon.com/blogs/aws/new-logstash-plugin-search-dynamodb-content-using-elasticsearch/) for full text searching
 
 ## Todo
 
 - add GQL preferences resolver with mutation for adding student track preferences
-- add chapter content versioning using a data pointers, [e.g.](https://github.com/gary-alway/dynamodb-design-patterns/blob/master/test/patterns/useSortKeysForVersionControl.test.ts)
