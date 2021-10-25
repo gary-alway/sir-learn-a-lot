@@ -1,6 +1,24 @@
 version: '3.7'
 
 services:
+  elasticsearch:
+    container_name: elasticsearch
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.10.2
+    environment:
+      - node.name=elasticsearch
+      - cluster.name=es-docker-cluster
+      - discovery.type=single-node
+      - bootstrap.memory_lock=true
+      - 'ES_JAVA_OPTS=-Xms512m -Xmx512m'
+    ports:
+      - '9200:9200'
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - data01:/Users/garyalway/dev/gda/sir-learn-a-lot/data
+
   localstack:
     container_name: '${LOCALSTACK_DOCKER_NAME-localstack_main}'
     image: localstack/localstack
@@ -19,6 +37,7 @@ services:
       - localstack-network
     depends_on:
       - localstack
+      - elasticsearch
     environment:
       - TARGETS=localstack:4566
       - TIMEOUT=120
@@ -26,3 +45,7 @@ services:
 networks:
   localstack-network:
     name: 'localstack-network'
+
+volumes:
+  data01:
+    driver: local

@@ -45,7 +45,7 @@ This work is largely taken from and inspired by the following sources from [Rick
 
 ### Architecture
 
-A single `apollo-server-lambda` lambda hosts the GraphQL `POST` route `/graphql` (for more details [see npm package](https://www.npmjs.com/package/apollo-server-lambda)). A second lambda is listening to the DynamoDB stream in order to atomically update the users xp score as progress is made in the various chapters. The majority of the repository code (which is the most complex code) is boilerplate / formulaic so could be converted into its own DynamoDB single table library but this task is deferred for the scope of this POC. The rest of the code is simple types and GraphQL queries and mutation logic constructed using `type-graphql` then allowing GraphQL and DynamoDB to work their magic! Combined with Lambda this solution represents a high scalable, elastic, dynamic service.
+A single `apollo-server-lambda` lambda hosts the GraphQL `POST` route `/graphql` (for more details [see npm package](https://www.npmjs.com/package/apollo-server-lambda)). A second lambda is listening to the DynamoDB stream in order to atomically update the users aggregate xp score as progress is made in the various chapters as well as pushing all event data to elasticsearch. The majority of the repository code (which is the most complex code) is boilerplate / formulaic so could be converted into its own DynamoDB single table library but this task is deferred for the scope of this POC. The rest of the code is simple types and GraphQL queries and mutation logic constructed using `type-graphql` then allowing GraphQL and DynamoDB to work their magic! Combined with Lambda this solution represents a high scalable, elastic, dynamic service.
 
 ![architecture](./design/architecture.svg)
 
@@ -60,6 +60,9 @@ yarn
 
 # fire up localstack infrastructure (DynamoDB and table definition)
 yarn local:up
+
+# create the elasticsearch index
+curl -X PUT http://localhost:9200/ddb-index
 
 # seed the database with some random data
 yarn seed

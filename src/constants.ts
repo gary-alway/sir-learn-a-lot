@@ -18,6 +18,8 @@ export const AWS_CONFIG = {
 }
 export const DDB_TABLE = 'sir-learn-a-lot'
 export const STREAM_DLQ = 'http://localhost:4566/000000000000/stream-dlq'
+export const ELASTICSEARCH_URL = 'http://localhost:9200'
+export const ELASTICSEARCH_INDEX = 'ddb-index'
 
 export const dynamoClient = createDynamoClient(new DocumentClient(AWS_CONFIG))
 export const sqsClient = createSQSClient(new SQS(AWS_CONFIG))
