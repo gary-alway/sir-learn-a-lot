@@ -45,7 +45,7 @@ This work is largely taken from and inspired by the following sources from [Rick
 
 ### Architecture
 
-A single `apollo-server-lambda` lambda hosts the GraphQL `POST` route `/graphql` (for more details [see npm package](https://www.npmjs.com/package/apollo-server-lambda)). A second lambda is listening to the DynamoDB stream in order to atomically update the users aggregate xp score as progress is made in the various chapters as well as pushing all event data to elasticsearch. The majority of the repository code (which is the most complex code) is boilerplate / formulaic so could be converted into its own DynamoDB single table library but this task is deferred for the scope of this POC. The rest of the code is simple types and GraphQL queries and mutation logic constructed using `type-graphql` then allowing GraphQL and DynamoDB to work their magic! Combined with Lambda this solution represents a high scalable, elastic, dynamic service.
+A single `apollo-server-lambda` lambda hosts the GraphQL `POST` route `/graphql` (for more details [see npm package](https://www.npmjs.com/package/apollo-server-lambda)). A second lambda is listening to the DynamoDB stream in order to atomically update the users aggregate xp score as progress is made in the various chapters as well as pushing all event data to elasticsearch. The majority of the repository code (which is the most complex code) is boilerplate / formulaic so could be converted into its own DynamoDB single table library but this task is deferred for the scope of this POC. The rest of the code is simple types and GraphQL queries and mutation logic constructed using `type-graphql` then allowing GraphQL and DynamoDB to work their magic! Combined with Lambda this solution represents a high scalable, elastic, dynamic service. Note that there is also a GraphQL express server running.
 
 ![architecture](./design/architecture.svg)
 
@@ -83,7 +83,8 @@ yarn local:down
 yarn dev
 ```
 
-Server is running on [http://localhost:9000/graphql](http://localhost:9000/graphql)
+Lambda GraphQL server is running on [http://localhost:9000/graphql](http://localhost:9000/graphql)
+Express GraphQL server is running on [http://localhost:9001/graphql](http://localhost:9001/graphql)
 
 Explore the full database content:
 
@@ -110,6 +111,7 @@ query exploreDb {
           firstName
           lastName
           email
+          xp
           preferences {
             track {
               id
@@ -252,7 +254,8 @@ We should not use a NoSQL database with multiple tables to model relational data
 - only use [DAX](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/DAX.html) for **read intensive** applications
 - understand how [partitions](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/HowItWorks.Partitions.html) work
 - use SNS, SQS, Lambda and Dynamo to develop highly performant, scalable, elastic, asynchronous, decoupled micro-services
-- use [elastic search with DynamoDB](https://aws.amazon.com/blogs/aws/new-logstash-plugin-search-dynamodb-content-using-elasticsearch/) for full text searching
+- use [elasticsearch with DynamoDB](https://aws.amazon.com/blogs/aws/new-logstash-plugin-search-dynamodb-content-using-elasticsearch/) for full text searching
+  - useful chrome extension for elastic search - [elasticvue](https://elasticvue.com/)
 
 ## Known issues
 

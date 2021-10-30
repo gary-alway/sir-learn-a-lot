@@ -1,14 +1,15 @@
 import 'reflect-metadata'
 import { ApolloServer } from 'apollo-server-lambda'
 import { buildSchema } from 'type-graphql'
-import { PreferenceResolver, StudentResolver } from '../domain/studentResolver'
-import { TrackResolver } from '../domain/trackResolver'
+import { APIGatewayEvent, Context, Callback } from 'aws-lambda'
+import { ChapterResolver } from '../domain/chapterResolver'
 import { CourseResolver } from '../domain/courseResolver'
 import {
   EnrollmentResolver,
   ProgressResolver
 } from '../domain/enrollmentResolver'
-import { APIGatewayEvent, Context, Callback } from 'aws-lambda'
+import { StudentResolver, PreferenceResolver } from '../domain/studentResolver'
+import { TrackResolver } from '../domain/trackResolver'
 
 export async function handler(
   event: APIGatewayEvent,
@@ -31,7 +32,8 @@ export async function handler(
       CourseResolver,
       EnrollmentResolver,
       PreferenceResolver,
-      ProgressResolver
+      ProgressResolver,
+      ChapterResolver
     ],
     emitSchemaFile: true
   })
